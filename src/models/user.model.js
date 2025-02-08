@@ -1,10 +1,14 @@
-const express = require("express");
+const mongoose = require('mongoose');
 
-const router = express.Router();
-
-router.get("/", (req, res) => {
-    res.send({ user: req.user });
+const userSchema = new mongoose.Schema({
+    email: {type: String, required: true},
+    password: {type: String, required: false},
+    name: {type: String, required: true},
+    profilePic: {type: String, required: false},
+    donations: [{type: mongoose.Schema.Types.ObjectId, ref: "ngos", required: false}]
+}, {
+    versionKey: false,
+    timestamps: true
 });
 
-
-module.exports = router;
+module.exports = mongoose.model("user", userSchema); // users
